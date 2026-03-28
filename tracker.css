@@ -1,0 +1,169 @@
+body,
+.glass-card,
+input,
+button {
+    transition: all 0.2s ease;
+}
+
+.dark-theme {
+    --bg: #0F172A;
+    --habitC: #141C35;
+    --card: #182234;
+    --text: #F8FAFC;
+    --border: rgba(255, 255, 255, 0.08);
+    --input-bg: #1E293B;
+}
+
+.light-theme {
+    --bg: #F8FAFC;
+    --habitC: #F4F6FB;
+    --card: #FAFBFC;
+    --text: #1E293B;
+    --border: rgba(0, 0, 0, 0.05);
+    --input-bg: #FFFFFF;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+}
+
+.glass-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.habit-item {
+    overflow: hidden;
+    border-left: 4px solid transparent;
+    background: var(--card);
+}
+
+.habit-item.completed {
+    border-left-color: #6366f1;
+    background: var(--habitC);
+}
+
+.delete-btn {
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.habit-item:hover .delete-btn {
+    opacity: 1;
+}
+
+.chart-container {
+    height: 220px;
+    width: 100%;
+}
+
+/* Custom Animations for the Loader */
+@keyframes spin-reverse {
+    from {
+        transform: rotate(0deg);
+    }
+    
+    to {
+        transform: rotate(-360deg);
+    }
+}
+
+@keyframes loadProgress {
+    0% {
+        width: 0%;
+    }
+    
+    100% {
+        width: 100%;
+    }
+}
+
+.animate-spin-reverse {
+    animation: spin-reverse 1.5s linear infinite;
+}
+
+.loading-bar-fill {
+    animation: loadProgress 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Page Reveal Effect */
+#mainApp {
+    opacity: 0;
+    filter: blur(10px);
+    transition-property: background-color, filter, opacity;
+    transition-duration: 1s;
+    transition-timing-function: cubic-bezier(0.8, 0, 0.4, 1);
+}
+
+.content-ready #mainApp {
+    opacity: 1;
+    filter: blur(0);
+}
+
+.loader-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Swipe Architecture */
+.habit-wrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.habit-content {
+    position: relative;
+    z-index: 10;
+    background: var(--card);
+    touch-action: pan-y;
+    will-change: transform;
+}
+
+.swipe-action {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 1.5rem;
+    font-size: 8px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.action-edit {
+    left: 0;
+    background: linear-gradient(90deg, rgba(99, 102, 241, 0.4) 0%, transparent 60%);
+    color: #818cf8;
+    justify-content: flex-start;
+}
+
+.action-delete {
+    right: 0;
+    background: linear-gradient(-90deg, rgba(239, 68, 68, 0.4) 0%, transparent 60%);
+    color: #f87171;
+    justify-content: flex-end;
+}
+
+.edit-input-field {
+    background: var(--input-bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    width: 100%;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    margin: 1.25rem 0;
+    outline: none;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
