@@ -1040,6 +1040,27 @@ function updateDailyQuote() {
     `"${quotes[today.getDate() % quotes.length]}"`;
 }
 
+//Browsers Checker
+window.addEventListener(
+  'DOMContentLoaded', (event) => {
+    const userAgent = navigator
+      .userAgent || navigator
+      .vendor || window.opera;
+    const promoContainer = document
+      .getElementById(
+        'appPromoContainer');
+    const isWebView = userAgent
+      .includes("; wv");
+    setInterval(() => {
+      
+      if (!isWebView) {
+        promoContainer.style
+          .display =
+          "flex";
+      }
+    }, 2000)
+  });
+
 updateDailyQuote();
 renderEfficiencyCubes();
 checkWeeklyReset();

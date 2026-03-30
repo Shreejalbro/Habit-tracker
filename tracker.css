@@ -29,7 +29,10 @@ body {
     font-family: 'Inter', sans-serif;
     min-height: 100vh;
 }
-
+#appPromoContainer > p {
+    width:90%;
+    border-top:2px solid var(--border);
+}
 .glass-card {
     background: var(--card);
     border: 1px solid var(--border);
