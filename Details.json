@@ -1,0 +1,6 @@
+{
+  "version": "1.13",
+  "build_date": "2026-04-03",
+  "environment": "production",
+  "update_notes": "Fixed minor bugs and improved load speed."
+}
