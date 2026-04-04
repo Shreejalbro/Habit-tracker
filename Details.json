@@ -1,6 +1,7 @@
 {
-  "version": "1.157",
+  
+  "version": "1.13",
   "build_date": "2026-04-03",
   "environment": "production",
-  "update_notes": "Fixed minor bugs and improved load speed."
+  "update_notes": "Fixed Music player. Added new Edge panel Feature."
 }
