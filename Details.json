@@ -1,7 +1,9 @@
 {
-  
   "version": "1.13",
   "build_date": "2026-04-03",
   "environment": "production",
-  "update_notes": "Fixed Music player. Added new Edge panel Feature."
+  "update_notes": [
+    "Fixed the Music player.",
+    "Added a brand new Edge Panel feature for quick access."
+  ]
 }
