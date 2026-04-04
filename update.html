@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+    <title>System Metric | Update
+    </title>
+    <style>
+        :root {
+            --bg-dark: #0f111a;
+            --card-bg: #1a1d2e;
+            --accent-blue: #00d2ff;
+            --text-main: #e0e0e0;
+            --text-dim: #a0a0a0;
+            --border-glow: rgba(0, 210, 255, 0.3);
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .update-card {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            width: 100%;
+            max-width: 420px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .icon-box {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+            color: #fff;
+        }
+        
+        .version-badge {
+            display: inline-block;
+            background: rgba(0, 210, 255, 0.1);
+            color: var(--accent-blue);
+            padding: 6px 16px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            margin-top: 12px;
+            font-weight: 600;
+            border: 1px solid rgba(0, 210, 255, 0.2);
+        }
+        
+        .changelog-container {
+            text-align: left;
+            margin: 1.5rem 0;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 12px;
+            border-left: 3px solid var(--accent-blue);
+        }
+        
+        .changelog-title {
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        ul {
+            margin: 0;
+            padding-left: 20px;
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .download-btn {
+            background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(58, 123, 213, 0.4);
+            margin-top: 10px;
+        }
+        
+        .download-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(58, 123, 213, 0.6);
+        }
+        
+        .download-btn:disabled {
+            background: #333;
+            color: #666;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        
+        #status-text {
+            margin-top: 15px;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+    </style>
+</head>
+
+<body>
+    
+    <div class="update-card">
+        <div class="icon-box">🚀</div>
+        <h2>System Metric</h2>
+        <div id="version-display"
+            class="version-badge">
+            Checking...</div>
+        
+        <div
+            class="changelog-container">
+            <span
+                class="changelog-title">What's
+                New</span>
+            <ul id="update-notes">
+                <li>Loading update
+                    details...</li>
+            </ul>
+        </div>
+        
+        <button id="downloadBtn"
+            class="download-btn"
+            onclick="executeDownload()"
+            disabled>
+            Initializing...
+        </button>
+        <div id="status-text">Fetching
+            latest build from GitHub...
+        </div>
+    </div>
+    
+    <script>
+        const GITHUB_JSON =
+            "https://raw.githubusercontent.com/Shreejalbro/Habit-tracker/refs/heads/main/Details.json";
+        const APK_URL =
+            "https://raw.githubusercontent.com/Shreejalbro/Habit-tracker/main/System%20Metric.apk";
+        
+        let latestVersion = "1.0.0";
+        
+        async function init() {
+            try {
+                const response =
+                    await fetch(
+                        `${GITHUB_JSON}?t=${Date.now()}`
+                        );
+                const data =
+                    await response
+                    .json();
+                
+                latestVersion = data
+                    .version;
+                document
+                    .getElementById(
+                        'version-display'
+                        )
+                    .innerText =
+                    `v${latestVersion} Available`;
+                const
+                    listContainer =
+                    document
+                    .getElementById(
+                        'update-notes'
+                        );
+                listContainer
+                    .innerHTML = "";
+                
+                if (Array.isArray(
+                        data
+                        .update_notes
+                        )) {
+                    data.update_notes
+                        .forEach(
+                            note => {
+                                const
+                                    li =
+                                    document
+                                    .createElement(
+                                        'li'
+                                        );
+                                li.innerText =
+                                    note;
+                                listContainer
+                                    .appendChild(
+                                        li
+                                        );
+                            });
+                } else {
+                    const li =
+                        document
+                        .createElement(
+                            'li');
+                    li.innerText =
+                        data
+                        .update_notes;
+                    listContainer
+                        .appendChild(
+                            li);
+                }
+                const btn = document
+                    .getElementById(
+                        'downloadBtn'
+                        );
+                btn.innerText =
+                    "Download & Install";
+                btn.disabled =
+                false;
+                document
+                    .getElementById(
+                        'status-text'
+                        )
+                    .innerText =
+                    "Update is ready to download.";
+                
+            } catch (err) {
+                console.error(
+                    "Update error:",
+                    err);
+                document
+                    .getElementById(
+                        'update-notes'
+                        )
+                    .innerHTML =
+                    "<li>Unable to load changelog.</li>";
+                document
+                    .getElementById(
+                        'status-text'
+                        )
+                    .innerText =
+                    "Connection failed. Please refresh.";
+            }
+        }
+        
+        async function executeDownload() {
+            const btn = document
+                .getElementById(
+                    'downloadBtn');
+            const status = document
+                .getElementById(
+                    'status-text');
+            
+            btn.innerText =
+                "Preparing File...";
+            btn.disabled = true;
+            status.innerText =
+                "Downloading data from server...";
+            
+            try {
+                const response =
+                    await fetch(
+                        APK_URL);
+                if (!response.ok)
+                    throw new Error(
+                        'Network response was not ok'
+                        );
+                const blob =
+                    await response
+                    .blob();
+                
+                const blobUrl =
+                    window.URL
+                    .createObjectURL(
+                        blob);
+                
+                const fileName =
+                    `System_Metric_v${latestVersion}.apk`;
+                
+                const link =
+                    document
+                    .createElement(
+                        'a');
+                link.href = blobUrl;
+                link.download =
+                    fileName;
+                document.body
+                    .appendChild(
+                        link);
+                link.click();
+                document.body
+                    .removeChild(
+                        link);
+                window.URL
+                    .revokeObjectURL(
+                        blobUrl);
+                
+                btn.innerText =
+                    "Success!";
+                status.innerText =
+                    "Check your downloads folder.";
+                
+                setTimeout(() => {
+                    btn.innerText =
+                        "Download Again";
+                    btn.disabled =
+                        false;
+                }, 5000);
+                
+            } catch (err) {
+                console.error(
+                    "Download failed:",
+                    err);
+                window.location
+                    .href = APK_URL;
+                status.innerText =
+                    "Redirecting to direct link...";
+            }
+        }
+        
+        
+        init();
+    </script>
+</body>
+
+</html>
