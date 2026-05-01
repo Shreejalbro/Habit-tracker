@@ -1,10 +1,11 @@
 {
   "version": "1.13",
-  "build_date": "2026-04-15",
+  "build_date": "2026-05-01",
   "environment": "production",
   "update_notes": [
     "Weekly Records History Viewer.",
     "Sound Effect added to Timer.",
-    "New Timer Format"
+    "New Timer Format",
+    "Song Storage capacity Increased.[×10]"
   ]
 }
